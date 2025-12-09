@@ -232,9 +232,9 @@ void sm3_avalanche_test(const uint8_t* original_input, size_t input_len, int tes
         int diff_bits = 0;
         if (round < 3) printf("  哈希差异详情：\n");
         for (int i = 0; i < SM3_DIGEST_LENGTH; i++) {
-            uint8_t xor = original_digest[i] ^ modified_digest[i];
+            uint8_t xor_val = original_digest[i] ^ modified_digest[i];
             int byte_diff = 0;
-            uint8_t temp = xor;
+            uint8_t temp = xor_val;
             while (temp) {
                 byte_diff += (temp & 1);
                 temp >>= 1;
