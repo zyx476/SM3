@@ -307,62 +307,7 @@ void sm3_avalanche_test() {
     }
 }
 
-// -------------------------- 边界测试模块 --------------------------
-/*void sm3_boundary_test() {
-    printf("\n===================== 边界测试 =====================\n");
-    uint8_t digest[SM3_DIGEST_LENGTH];
-    char digest_str[65];
 
-    // 测试1：空输入（长度=0）
-    printf("1. 空输入测试：\n");
-    SM3((uint8_t*)"", 0, digest);
-    sm3_digest_to_str(digest, digest_str);
-    printf("   哈希值：%s\n", digest_str);
-    printf("   预期值：1ab21d8355cfa17f8e61194831e81a8f22bec8c728fefb747ed035eb5082aa2b\n");
-
-    // 测试2：刚好1个块（64字节）
-    printf("\n2. 64字节（1个块）测试：\n");
-    uint8_t block_64[64];
-    memset(block_64, 0xAA, 64);
-    SM3(block_64, 64, digest);
-    sm3_digest_to_str(digest, digest_str);
-    printf("   输入：64字节0xAA → 哈希值：%s\n", digest_str);
-
-    // 测试3：临界填充（447字节，填充后刚好2个块）
-    printf("\n3. 447字节（临界填充）测试：\n");
-    uint8_t critical_447[447];
-    memset(critical_447, 0xBB, 447);
-    SM3(critical_447, 447, digest);
-    sm3_digest_to_str(digest, digest_str);
-    printf("   输入：447字节0xBB → 哈希值：%s\n", digest_str);
-
-    // 测试4：448字节（填充后需补1个块）
-    printf("\n4. 448字节（填充边界）测试：\n");
-    uint8_t block_448[448];
-    memset(block_448, 0xCC, 448);
-    SM3(block_448, 448, digest);
-    sm3_digest_to_str(digest, digest_str);
-    printf("   输入：448字节0xCC → 哈希值：%s\n", digest_str);
-
-    // 测试5：超长输入（1024*1024字节，1MB）
-    printf("\n5. 1MB超长输入测试：\n");
-    uint8_t* large_1mb = (uint8_t*)malloc(1024 * 1024);
-    assert(large_1mb != NULL);
-    memset(large_1mb, 0xDD, 1024 * 1024);
-    SM3(large_1mb, 1024 * 1024, digest);
-    sm3_digest_to_str(digest, digest_str);
-    printf("   输入：1MB 0xDD → 哈希值：%s\n", digest_str);
-    free(large_1mb);
-
-    // 测试6：单字节输入（最小非空输入）
-    printf("\n6. 单字节输入测试：\n");
-    uint8_t single_byte[1] = { 0xEE };
-    SM3(single_byte, 1, digest);
-    sm3_digest_to_str(digest, digest_str);
-    printf("   输入：0xEE → 哈希值：%s\n", digest_str);
-
-    printf("\n边界测试完成 \n");}
-*/
     // -------------------------- 边界测试模块（适配OpenSSL验证） --------------------------
 void sm3_boundary_test() {
     printf("\n===================== 边界测试（OpenSSL验证） =====================\n");
@@ -551,7 +496,7 @@ void verify_standard_cases() {
     char str2[65]; sm3_digest_to_str(digest2, str2);
     printf("2. 字符串\"abc\"：\n   计算值：%s\n   预期值：66c7f0f462eeedd9d1f2d46bdc10e4e24167c4875cf2f7a2297da02b8f4ba8e0\n", str2);
 
-    // 用例3：32个"abcd"
+    // 用例3：16个"abcd"
     const char* test_str = "abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd";
     uint8_t digest3[SM3_DIGEST_LENGTH];
     SM3((uint8_t*)test_str, strlen(test_str), digest3);
